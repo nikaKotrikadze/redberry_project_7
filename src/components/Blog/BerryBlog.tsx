@@ -5,6 +5,7 @@ import BerryBlogInfo from "./BerryBlogInfo";
 import { $api } from "../../utils/http";
 import { ReactSVG } from "react-svg";
 import GoBackArrow from "../../images/GoBackArrow.svg";
+import BerryBlogCarousel from "./BerryBlogCarousel";
 
 const BerryBlog = () => {
   const { id } = useParams();
@@ -36,6 +37,7 @@ const BerryBlog = () => {
       </div>
       <BerryBlogInfo blog={blog} />
       {/* CAROUSEL */}
+      <BerryBlogCarousel />
     </>
   );
 };

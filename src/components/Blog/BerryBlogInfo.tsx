@@ -1,5 +1,4 @@
 import React from "react";
-import ground from "../../images/ground.jpg";
 import "./berrybloginfo.css";
 
 const BerryBlogInfo = ({ blog }: any) => {

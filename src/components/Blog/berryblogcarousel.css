@@ -1,0 +1,31 @@
+.carousel-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  gap: 40px;
+}
+
+.carousel-wrapper {
+  display: flex;
+  overflow: hidden;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.carousel-item {
+  height: 200px;
+  width: 400px;
+  box-sizing: border-box;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}

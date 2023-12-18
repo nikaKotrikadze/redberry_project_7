@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./blogtemplate.css";
 import groundImage from "../../images/ground.jpg";
 import Arrow from "../../images/Arrow.svg";
@@ -15,6 +15,10 @@ const BlogTemplate = ({
   title,
 }: any) => {
   const truncatedText = description.slice(0, 90).trim();
+
+  const handleLinkClick = () => {
+    window.scrollTo(0, 0);
+  };
 
   return (
     <div className="blog-template-container">
@@ -94,12 +98,13 @@ const BlogTemplate = ({
               fontWeight: "400",
             }}
           >
-            {truncatedText}...
+            {truncatedText}
           </h3>
         </div>
 
         <Link
-          to={`blogs/${id}`}
+          to={`/blogs/${id}`}
+          onClick={handleLinkClick}
           style={{
             display: "flex",
             textDecoration: "none",
