@@ -1,0 +1,7 @@
+.specific-blog-info-container {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
