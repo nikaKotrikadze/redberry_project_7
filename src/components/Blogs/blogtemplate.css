@@ -1,0 +1,12 @@
+.blog-template-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 408px;
+}
+.blog-info-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
