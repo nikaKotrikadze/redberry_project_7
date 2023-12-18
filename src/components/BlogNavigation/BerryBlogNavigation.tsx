@@ -1,24 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./berryblognavigation.css";
 import { useCategoryStore } from "./blogCategory.store";
 import { log } from "console";
 
 const BerryBlogNavigation = () => {
-  const { categories, setCategories }: any = useCategoryStore();
+  const {
+    categories,
+    setCategories,
+    selectedCategories,
+    toggleCategorySelection,
+  }: any = useCategoryStore();
 
   useEffect(() => {
     setCategories();
   }, []);
-  //   console.log("categories", categories);
+  console.log("categories", categories);
 
   return (
     <div className="blog-navigation-container">
       {categories.map((item: any) => (
         <button
           key={item.id}
+          onClick={() => toggleCategorySelection(item.id)}
           style={{
             background: item.background_color,
-            border: "none",
+            border: selectedCategories.includes(item.id)
+              ? "1px solid black"
+              : "none",
             padding: "8px 16px 8px 16px",
             borderRadius: "30px",
             cursor: "pointer",

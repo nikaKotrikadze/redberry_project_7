@@ -3,23 +3,6 @@ import ground from "../../images/ground.jpg";
 import "./berrybloginfo.css";
 
 const BerryBlogInfo = ({ blog }: any) => {
-  const categories = [
-    {
-      title: "მარკეტ",
-      text_color: "orange",
-      background_color: "lightblue",
-    },
-    {
-      title: "მარკეტ",
-      text_color: "orange",
-      background_color: "lightblue",
-    },
-    {
-      title: "მარკეტ",
-      text_color: "orange",
-      background_color: "lightblue",
-    },
-  ];
   return (
     <div className="specific-blog-info-container">
       <div>
