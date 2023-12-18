@@ -3,8 +3,10 @@ import "./blogtemplate.css";
 import groundImage from "../../images/ground.jpg";
 import Arrow from "../../images/Arrow.svg";
 import { ReactSVG } from "react-svg";
+import { Link } from "react-router-dom";
 
 const BlogTemplate = ({
+  id,
   image,
   author,
   categories,
@@ -24,7 +26,7 @@ const BlogTemplate = ({
       />
       {/* info container */}
       <div className="blog-info-container">
-        <div>
+        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
           <h2
             style={{
               color: "#1A1A1F",
@@ -96,8 +98,8 @@ const BlogTemplate = ({
           </h3>
         </div>
 
-        <a
-          href="/haha"
+        <Link
+          to={`blogs/${id}`}
           style={{
             display: "flex",
             textDecoration: "none",
@@ -107,7 +109,7 @@ const BlogTemplate = ({
         >
           სრულად ნახვა
           <ReactSVG src={Arrow} />
-        </a>
+        </Link>
       </div>
     </div>
   );

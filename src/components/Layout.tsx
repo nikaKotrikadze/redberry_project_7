@@ -8,11 +8,10 @@ const Layout = () => {
   return (
     <>
       <BerryHeader />
-      <div style={{ backgroundColor: "#f3f2fa" }}>
-        <BerryHero />
-        <BerryBlogNavigation />
-        <BerryBlogs />
-      </div>
+
+      <BerryHero />
+      <BerryBlogNavigation />
+      <BerryBlogs />
     </>
   );
 };

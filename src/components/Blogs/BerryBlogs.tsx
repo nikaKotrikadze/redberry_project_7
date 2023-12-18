@@ -7,13 +7,13 @@ const BerryBlogs = () => {
   useEffect(() => {
     setBlogs();
   }, []);
-  console.log("blogs", blogs);
 
   return (
     <div className="blogs-container">
       {blogs.map((item: any) => (
         <BlogTemplate
           key={item.id}
+          id={item.id}
           image={item.image}
           author={item.author}
           categories={item.categories}
