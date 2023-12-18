@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./berryblogcarousel.css";
 import { useBlogsStore } from "../Blogs/blogs.store";
 import BlogTemplate from "../Blogs/BlogTemplate";
-import { ReactSVG } from "react-svg";
-import SliderArrow from "../../images/SliderArrow.svg";
 
 const BerryBlogCarousel = () => {
   const { blogs, setBlogs }: any = useBlogsStore();
