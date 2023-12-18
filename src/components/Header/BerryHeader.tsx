@@ -4,6 +4,8 @@ import { ReactSVG } from "react-svg";
 import REDBERRYLogo from "../../images/BerryLogo.svg";
 
 const BerryHeader = () => {
+  console.log(process.env.REACT_APP_TOKEN);
+
   return (
     <header className="header-container">
       <ReactSVG src={REDBERRYLogo} />
