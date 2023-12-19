@@ -6,7 +6,7 @@ import GoBackArrow from "../../images/GoBackArrow.svg";
 import BerryBlogAdderInputs from "./BerryBlogAdder/BerryBlogAdderInputs";
 const BerryAddBlog = () => {
   return (
-    <>
+    <div style={{ backgroundColor: "#FBFAFF" }}>
       <BerryBlogHeader />
       <div style={{ position: "absolute", left: 80, top: 120 }}>
         <Link to={"/"}>
@@ -14,7 +14,7 @@ const BerryAddBlog = () => {
         </Link>
       </div>
       <BerryBlogAdderInputs />
-    </>
+    </div>
   );
 };
 
