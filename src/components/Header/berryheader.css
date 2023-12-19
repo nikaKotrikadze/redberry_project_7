@@ -15,3 +15,12 @@
   border: none;
   border-radius: 8px;
 }
+
+.add-blog-button {
+  background-color: #5d37f3;
+  color: #ffffff;
+  font-size: 14px;
+  padding: 10px 20px 10px 20px;
+  border: none;
+  border-radius: 8px;
+}
