@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./berryblogadderinputs.css";
 import BerryImageDragAndDrop from "./BerryImageDragAndDrop";
 import Select from "react-select";
@@ -6,7 +6,8 @@ import { useCategoryStore } from "../../BlogNavigation/blogCategory.store";
 
 const BerryBlogAdderInputs = () => {
   const { categories }: any = useCategoryStore();
-  const options: any = [];
+  const [options, setOptions] = useState([]);
+
   const colourStyles: any = {
     control: (styles: any) => ({
       ...styles,
@@ -17,17 +18,41 @@ const BerryBlogAdderInputs = () => {
       fontSize: "14px",
       lineHeight: "20px",
     }),
+    multiValue: (styles: any, { data }: any) => {
+      return {
+        ...styles,
+        color: "white",
+        backgroundColor: data.background_color,
+        borderRadius: "12px",
+      };
+    },
+    multiValueLabel: (styles: any, { data }: any) => ({
+      ...styles,
+      color: "white",
+    }),
+    multiValueRemove: (styles: any, { data }: any) => ({
+      ...styles,
+      color: "white",
+      ":hover": {
+        cursor: "pointer",
+      },
+    }),
   };
 
   useEffect(() => {
-    categories.forEach((i: any) => {
-      options.push({ value: i.title, label: i.title });
-    });
-  }, []);
+    const categoryOptions = categories.map((i: any) => ({
+      value: i.title,
+      label: i.title,
+      text_color: i.text_color,
+      background_color: i.background_color,
+    }));
+    setOptions(categoryOptions);
+  }, [categories]);
 
   const Selector = () => (
     <Select
       defaultValue={[]}
+      closeMenuOnSelect={false}
       isMulti
       name="categories"
       options={options}
@@ -138,9 +163,38 @@ const BerryBlogAdderInputs = () => {
               <Selector />
             </div>
           </div>
+          {/* email */}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "8px",
+              width: "280px",
+            }}
+          >
+            <label className="blog-adder-inputs-label">ელ-ფოსტა</label>
+            <input
+              placeholder="Example@redberry.ge"
+              className="blog-adder-inputs-input"
+            />
+          </div>
         </div>
         {/* button */}
-        {/* <button></button> */}
+        <button
+          style={{
+            backgroundColor: "#5D37F3",
+            padding: "10px 20px",
+            borderRadius: "8px",
+            fontWeight: 500,
+            fontSize: "14px",
+            lineHeight: "20px",
+            color: "#FFFFFF",
+            width: "288px",
+            alignSelf: "flex-end",
+          }}
+        >
+          გამოქვეყნება
+        </button>
       </div>
     </div>
   );
