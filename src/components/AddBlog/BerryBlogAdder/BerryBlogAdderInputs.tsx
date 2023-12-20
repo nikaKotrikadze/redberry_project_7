@@ -22,7 +22,6 @@ const BerryBlogAdderInputs = () => {
       ...storedForm,
     };
   });
-
   const handleFormChange = (e: any) => {
     const { name, value } = e.target;
     let isFormValid = true;
@@ -48,7 +47,7 @@ const BerryBlogAdderInputs = () => {
         isFormValid = value.length > 0;
         break;
       case "email":
-        isFormValid = value.endsWith("@redberry.ge");
+        isFormValid = value === "" || value.endsWith("@redberry.ge");
         break;
       default:
         break;
@@ -64,7 +63,7 @@ const BerryBlogAdderInputs = () => {
         const fieldValue = newForm[key];
         if (
           (Array.isArray(fieldValue) && fieldValue.length === 0) ||
-          (!fieldValue && key !== "category")
+          (!fieldValue && key !== "category" && key !== "email")
         ) {
           isFormValid = false;
           break;
@@ -344,7 +343,7 @@ const BerryBlogAdderInputs = () => {
                 width: "280px",
               }}
             >
-              <label className="blog-adder-inputs-label">კატეგორია</label>
+              <label className="blog-adder-inputs-label">კატეგორია *</label>
               <Selector />
             </div>
           </div>
@@ -366,14 +365,21 @@ const BerryBlogAdderInputs = () => {
               className="blog-adder-inputs-input"
               style={{
                 border: `1px solid ${
-                  form.email.endsWith("@redberry.ge") ? "#14D81C" : "#EA1919"
+                  form.email.endsWith("@redberry.ge") && form.email.length > 0
+                    ? "#14D81C"
+                    : form.email.length === 0
+                    ? "#E4E3EB"
+                    : "#EA1919"
                 }`,
-                background: !form.email.endsWith("@redberry.ge")
-                  ? "#FAF2F3"
-                  : "",
+                background:
+                  form.email.endsWith("@redberry.ge") && form.email.length > 0
+                    ? "#F8FFF8"
+                    : form.email.length === 0
+                    ? "#FCFCFD"
+                    : "#FAF2F3",
               }}
             />
-            {!form.email.endsWith("@redberry.ge") && (
+            {!form.email.endsWith("@redberry.ge") && form.email.length > 0 && (
               <div style={{ display: "flex", gap: "8px" }}>
                 <ReactSVG src={emailErrorIcon} />
                 <h1
@@ -392,10 +398,13 @@ const BerryBlogAdderInputs = () => {
         </div>
         {/* button */}
         <button
-          disabled={!form.isFormValid}
+          disabled={!form.isFormValid || form.category.length === 0}
           onClick={handleBlogSubmitter}
           style={{
-            backgroundColor: !form.isFormValid ? "#E4E3EB" : "#5D37F3",
+            backgroundColor:
+              !form.isFormValid || form.category.length === 0
+                ? "#E4E3EB"
+                : "#5D37F3",
             padding: "10px 20px",
             borderRadius: "8px",
             fontWeight: 500,
