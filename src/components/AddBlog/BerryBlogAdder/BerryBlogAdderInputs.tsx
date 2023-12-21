@@ -6,11 +6,17 @@ import { useCategoryStore } from "../../BlogNavigation/blogCategory.store";
 import { $api } from "../../../utils/http";
 import { ReactSVG } from "react-svg";
 import emailErrorIcon from "../../../images/emailErrorIcon.svg";
-import { useFileStore } from "./blogadder.store";
+import {
+  useBlogAddedSuccessfullyModalStore,
+  useFileStore,
+} from "./blogadder.store";
+import BerryBlogAdderSuccessModal from "./BerryBlogAdderSuccessModal";
 const BerryBlogAdderInputs = () => {
   const { categories, setCategories }: any = useCategoryStore();
   const { base64String, setUploadedFile }: any = useFileStore();
   const [options, setOptions] = useState([]);
+  const { openModal }: any = useBlogAddedSuccessfullyModalStore();
+
   const [form, setForm] = useState(() => {
     const storedForm = JSON.parse(localStorage.getItem("blogForm") || "{}");
     return {
@@ -58,11 +64,12 @@ const BerryBlogAdderInputs = () => {
     try {
       const response = await $api.post("/blogs", blogData);
       console.log("Blog posted successfully:", response);
+      openModal();
+      resetForm();
     } catch (error) {
       console.error("Error posting blog:", error);
     }
     e.preventDefault();
-    resetForm();
   };
 
   const resetForm = () => {
@@ -180,6 +187,7 @@ const BerryBlogAdderInputs = () => {
   return (
     <div className="blog-adder-container">
       <div className="blog-adder-info-box">
+        <BerryBlogAdderSuccessModal />
         <h1 className="blog-adder-title">ბლოგის დამატება</h1>
         {/* inputs */}
         <div className="blog-adder-inputs">
