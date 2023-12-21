@@ -6,8 +6,10 @@ import { useCategoryStore } from "../../BlogNavigation/blogCategory.store";
 import { $api } from "../../../utils/http";
 import { ReactSVG } from "react-svg";
 import emailErrorIcon from "../../../images/emailErrorIcon.svg";
+import { useFileStore } from "./blogadder.store";
 const BerryBlogAdderInputs = () => {
   const { categories, setCategories }: any = useCategoryStore();
+  const { base64String, setUploadedFile }: any = useFileStore();
   const [options, setOptions] = useState([]);
   const [form, setForm] = useState(() => {
     const storedForm = JSON.parse(localStorage.getItem("blogForm") || "{}");
@@ -22,62 +24,60 @@ const BerryBlogAdderInputs = () => {
       ...storedForm,
     };
   });
+
   const handleFormChange = (e: any) => {
     const { name, value } = e.target;
-    let isFormValid = true;
 
-    switch (name) {
-      case "author":
-        isFormValid =
-          value.length >= 4 &&
-          value.split(" ").length >= 2 &&
-          isGeorgianSymbol(value.trim());
-        break;
-      case "title":
-        isFormValid = value.trim().length >= 2;
-        break;
-      case "description":
-        isFormValid = value.trim().length >= 2;
-        break;
-      case "date":
-        isFormValid = value !== "";
-        break;
-      case "category":
-        console.log("Selected category:", value);
-        isFormValid = value.length > 0;
-        break;
-      case "email":
-        isFormValid = value === "" || value.endsWith("@redberry.ge");
-        break;
-      default:
-        break;
+    setForm((prevForm: any) => ({
+      ...prevForm,
+      [name]: value,
+    }));
+
+    if (name === "categories") {
+      const categoryIds = value.map((category: any) => category.id);
+      setForm((prevForm: any) => ({
+        ...prevForm,
+        category: categoryIds,
+      }));
     }
+  };
 
-    const newForm = {
-      ...form,
-      [name]: name === "category" ? (value ? [value] : []) : value,
+  const handleBlogSubmitter = async (e: any) => {
+    console.log("blog submitted");
+    const blogData = {
+      title: form.title,
+      description: form.description,
+      image: base64String,
+      author: form.author,
+      publish_date: form.date,
+      categories: form.category,
+      email: form.email,
     };
+    console.log(blogData);
 
-    for (const key in newForm) {
-      if (newForm.hasOwnProperty(key) && key !== "isFormValid") {
-        const fieldValue = newForm[key];
-        if (
-          (Array.isArray(fieldValue) && fieldValue.length === 0) ||
-          (!fieldValue && key !== "category" && key !== "email")
-        ) {
-          isFormValid = false;
-          break;
-        }
-      }
+    try {
+      const response = await $api.post("/blogs", blogData);
+      console.log("Blog posted successfully:", response);
+    } catch (error) {
+      console.error("Error posting blog:", error);
     }
+    e.preventDefault();
+    resetForm();
+  };
 
-    console.log("Form values:", newForm);
-    console.log("Is form valid?", isFormValid);
-
+  const resetForm = () => {
     setForm({
-      ...newForm,
-      isFormValid,
+      author: "",
+      title: "",
+      description: "",
+      date: "",
+      category: [],
+      email: "",
+      isFormValid: false,
     });
+    localStorage.removeItem("uploadedFileName");
+    localStorage.removeItem("base64String");
+    setUploadedFile(null, null);
   };
 
   useEffect(() => {
@@ -85,9 +85,12 @@ const BerryBlogAdderInputs = () => {
       try {
         const response = await $api.get("/categories");
         const newCategories = response.data.data;
+        console.log("newCategories", newCategories);
+
         setCategories(newCategories);
 
         const categoryOptions = newCategories.map((i: any) => ({
+          id: i.id,
           value: i.title,
           label: i.title,
           text_color: i.text_color,
@@ -110,7 +113,13 @@ const BerryBlogAdderInputs = () => {
   const colourStyles: any = {
     control: (styles: any) => ({
       ...styles,
-      border: `1px solid ${form.category.length >= 1 ? "#14D81C" : "#EA1919"}`,
+      border: `1px solid ${
+        form.category.length >= 1
+          ? "#14D81C"
+          : form.category.length == 0
+          ? "#E4E3EB"
+          : "#EA1919"
+      }`,
       borderRadius: "12px",
       backgroundColor: "#fcfcfd",
       fontWeight: 400,
@@ -140,12 +149,11 @@ const BerryBlogAdderInputs = () => {
 
   const Selector = () => (
     <Select
-      value={form.category}
+      value={options.filter((option: any) => form.category.includes(option.id))}
       onChange={(selectedOptions: any) => {
-        console.log(selectedOptions);
         setForm((prevForm: any) => ({
           ...prevForm,
-          category: selectedOptions,
+          category: selectedOptions.map((option: any) => option.id),
         }));
       }}
       defaultValue={[]}
@@ -153,6 +161,8 @@ const BerryBlogAdderInputs = () => {
       isMulti
       name="categories"
       options={options}
+      getOptionLabel={(option: any) => option.label}
+      getOptionValue={(option: any) => option.id}
       styles={colourStyles}
       className="basic-multi-select"
       classNamePrefix="select"
@@ -167,9 +177,6 @@ const BerryBlogAdderInputs = () => {
     return isOnlyGeorgianLetters && !containsSymbolsOrNumbers;
   };
 
-  const handleBlogSubmitter = () => {
-    console.log("blog submitted");
-  };
   return (
     <div className="blog-adder-container">
       <div className="blog-adder-info-box">
@@ -210,16 +217,34 @@ const BerryBlogAdderInputs = () => {
                 className="blog-adder-inputs-input"
                 style={{
                   border: `1px solid ${
-                    form.author.length >= 4 ? "#14D81C" : "#EA1919"
+                    form.author.length >= 4
+                      ? "#14D81C"
+                      : form.author.length === 0 || form.author == ""
+                      ? "#E4E3EB"
+                      : "#EA1919"
                   }`,
                   borderRadius: "12px",
+
+                  background:
+                    form.author.length >= 4 &&
+                    form.author.split(" ").length >= 2 &&
+                    isGeorgianSymbol(form.author.trim())
+                      ? "#F8FFF8"
+                      : form.author.length === 0
+                      ? "#FCFCFD"
+                      : "#FAF2F3",
                 }}
               />
               <div>
                 <li
                   className="blog-inputs-bullet-points"
                   style={{
-                    color: form.author.length >= 4 ? "#14D81C" : "#EA1919",
+                    color:
+                      form.author.length >= 4
+                        ? "#14D81C"
+                        : form.author == ""
+                        ? ""
+                        : "#EA1919",
                   }}
                 >
                   მინიმუმ 4 სიმბოლო
@@ -231,6 +256,8 @@ const BerryBlogAdderInputs = () => {
                     color:
                       form.author.split(" ").length >= 2
                         ? "#14D81C"
+                        : form.author == ""
+                        ? ""
                         : "#EA1919",
                   }}
                 >
@@ -241,6 +268,8 @@ const BerryBlogAdderInputs = () => {
                   style={{
                     color: isGeorgianSymbol(form.author)
                       ? "#14D81C"
+                      : form.author == ""
+                      ? ""
                       : "#EA1919",
                   }}
                 >
@@ -266,16 +295,31 @@ const BerryBlogAdderInputs = () => {
                 className="blog-adder-inputs-input"
                 style={{
                   border: `1px solid ${
-                    form.title.length >= 2 ? "#14D81C" : "#EA1919"
+                    form.title.length >= 2
+                      ? "#14D81C"
+                      : form.title == ""
+                      ? "#E4E3EB"
+                      : "#EA1919"
                   }`,
                   borderRadius: "12px",
+                  background:
+                    form.title.length >= 2
+                      ? "#F8FFF8"
+                      : form.title.length === 0
+                      ? "#FCFCFD"
+                      : "#FAF2F3",
                 }}
               />
               <div>
                 <h3
                   className="blog-inputs-bullet-points"
                   style={{
-                    color: form.title.length >= 2 ? "#14D81C" : "#EA1919",
+                    color:
+                      form.title.length >= 2
+                        ? "#14D81C"
+                        : form.title == ""
+                        ? ""
+                        : "#EA1919",
                   }}
                 >
                   მინიმუმ 2 სიმბოლო
@@ -294,15 +338,30 @@ const BerryBlogAdderInputs = () => {
               className="blog-adder-textarea"
               style={{
                 border: `1px solid ${
-                  form.description.length >= 2 ? "#14D81C" : "#EA1919"
+                  form.description.length >= 2
+                    ? "#14D81C"
+                    : form.description == ""
+                    ? "#E4E3EB"
+                    : "#EA1919"
                 }`,
                 borderRadius: "12px",
+                background:
+                  form.description.length >= 2
+                    ? "#F8FFF8"
+                    : form.description.length === 0
+                    ? "#FCFCFD"
+                    : "#FAF2F3",
               }}
             ></textarea>
             <h3
               className="blog-inputs-bullet-points"
               style={{
-                color: form.description.length >= 2 ? "#14D81C" : "#EA1919",
+                color:
+                  form.description.length >= 2
+                    ? "#14D81C"
+                    : form.description == ""
+                    ? ""
+                    : "#EA1919",
               }}
             >
               მინიმუმ 2 სიმბოლო
@@ -329,8 +388,19 @@ const BerryBlogAdderInputs = () => {
                 type="date"
                 className="blog-adder-inputs-input"
                 style={{
-                  border: `1px solid ${form.date ? "#14D81C" : "#EA1919"}`,
+                  border: `1px solid ${
+                    form.date
+                      ? "#14D81C"
+                      : form.date == ""
+                      ? "#E4E3EB"
+                      : "#EA1919"
+                  }`,
                   borderRadius: "12px",
+                  background: form.date
+                    ? "#F8FFF8"
+                    : form.date.length === 0
+                    ? "#FCFCFD"
+                    : "#FAF2F3",
                 }}
               />
             </div>
@@ -398,11 +468,34 @@ const BerryBlogAdderInputs = () => {
         </div>
         {/* button */}
         <button
-          disabled={!form.isFormValid || form.category.length === 0}
+          disabled={
+            !base64String ||
+            !form.author ||
+            form.author.length < 4 ||
+            form.author.split(" ").length < 2 ||
+            !form.title ||
+            form.title.length < 2 ||
+            !form.description ||
+            form.description.length < 2 ||
+            !form.date ||
+            form.category.length < 1 ||
+            (form.email && !form.email.endsWith("@redberry.ge"))
+          }
           onClick={handleBlogSubmitter}
           style={{
             backgroundColor:
-              !form.isFormValid || form.category.length === 0
+              !base64String ||
+              !form.author ||
+              form.author.length < 4 ||
+              form.author.split(" ").length < 2 ||
+              !isGeorgianSymbol(form.author) ||
+              !form.title ||
+              form.title.length < 2 ||
+              !form.description ||
+              form.description.length < 2 ||
+              !form.date ||
+              form.category.length < 1 ||
+              (form.email && !form.email.endsWith("@redberry.ge"))
                 ? "#E4E3EB"
                 : "#5D37F3",
             padding: "10px 20px",

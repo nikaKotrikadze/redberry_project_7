@@ -11,23 +11,47 @@ const BerryImageDragAndDrop = () => {
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles: File[], fileRejections: FileRejection[]) => {
-      console.log(acceptedFiles);
-
       if (acceptedFiles.length === 1) {
-        setUploadedFile(acceptedFiles[0]);
+        const file = acceptedFiles[0];
+
+        toBase64(file);
       }
     },
   });
 
   const handleRemoveImage = () => {
-    setUploadedFile(null);
+    localStorage.removeItem("uploadedFileName");
+    localStorage.removeItem("base64String");
+
+    setUploadedFile(null, null);
   };
 
-  //   console.log("uploadedFile", uploadedFileName);
+  const toBase64 = (file: any) => {
+    if (!file.type.startsWith("image/")) {
+      console.error("Invalid file type. Please upload an image.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = () => {
+      const result = reader.result as string;
+      const base64String = result.split(",")[1];
+
+      setUploadedFile(file, base64String);
+
+      localStorage.setItem("base64String", base64String);
+    };
+
+    reader.onerror = (error) => {
+      console.error("Error reading the file:", error);
+    };
+  };
 
   return (
     <>
-      {!uploadedFileName ? (
+      {!uploadedFileName || uploadedFileName === "null" ? (
         <div
           {...getRootProps()}
           style={{
@@ -43,9 +67,26 @@ const BerryImageDragAndDrop = () => {
             gap: "24px",
           }}
         >
-          <input {...getInputProps()} />
+          <input {...getInputProps()} accept="image/*" />
           <ReactSVG src={FolderAddIcon} />
-          <p>Drag and drop a file here or click to browse.</p>
+          <p
+            style={{
+              color: "#1A1A1F",
+              fontSize: "14px",
+              fontWeight: 400,
+              lineHeight: "20px",
+            }}
+          >
+            ჩააგდეთ ფაილი აქ ან{" "}
+            <span
+              style={{
+                textDecoration: "underline",
+                fontWeight: 700,
+              }}
+            >
+              აირჩიეთ ფაილი
+            </span>
+          </p>
         </div>
       ) : (
         <div
