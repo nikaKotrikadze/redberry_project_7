@@ -40,7 +40,6 @@ const BerryImageDragAndDrop = () => {
       const base64String = result.split(",")[1];
 
       setUploadedFile(file, base64String);
-
       localStorage.setItem("base64String", base64String);
     };
 
@@ -114,7 +113,7 @@ const BerryImageDragAndDrop = () => {
               </p>
             </h1>
           </div>
-          <button onClick={handleRemoveImage}>
+          <button onClick={handleRemoveImage} type={"button"}>
             <ReactSVG src={removeImageIcon} />
           </button>
         </div>

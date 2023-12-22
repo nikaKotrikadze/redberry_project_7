@@ -48,28 +48,42 @@ const BerryBlogAdderInputs = () => {
     }
   };
 
+  const base64ToBlob = (base64String: string) => {
+    const byteString = atob(base64String);
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([ab], { type: "image/jpeg" });
+  };
+
   const handleBlogSubmitter = async (e: any) => {
-    console.log("blog submitted");
-    const blogData = {
-      title: form.title,
-      description: form.description,
-      image: base64String,
-      author: form.author,
-      publish_date: form.date,
-      categories: form.category,
-      email: form.email,
-    };
-    console.log(blogData);
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("title", form.title);
+    formData.append("description", form.description);
+    formData.append("author", form.author);
+    formData.append("publish_date", form.date);
+    formData.append("categories", JSON.stringify(form.category));
+    formData.append("email", form.email);
+    formData.append("image", base64ToBlob(base64String), "image.jpg");
 
     try {
-      const response = await $api.post("/blogs", blogData);
+      const response = await $api.post("/blogs", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       console.log("Blog posted successfully:", response);
       openModal();
       resetForm();
     } catch (error) {
       console.error("Error posting blog:", error);
     }
-    e.preventDefault();
   };
 
   const resetForm = () => {
@@ -185,7 +199,12 @@ const BerryBlogAdderInputs = () => {
   };
 
   return (
-    <div className="blog-adder-container">
+    <form
+      // method="POST"
+      onSubmit={handleBlogSubmitter}
+      className="blog-adder-container"
+      encType="multipart/form-data"
+    >
       <div className="blog-adder-info-box">
         <BerryBlogAdderSuccessModal />
         <h1 className="blog-adder-title">ბლოგის დამატება</h1>
@@ -476,6 +495,7 @@ const BerryBlogAdderInputs = () => {
         </div>
         {/* button */}
         <button
+          type={"submit"}
           disabled={
             !base64String ||
             !form.author ||
@@ -519,7 +539,7 @@ const BerryBlogAdderInputs = () => {
           გამოქვეყნება
         </button>
       </div>
-    </div>
+    </form>
   );
 };
 
