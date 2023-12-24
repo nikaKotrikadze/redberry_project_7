@@ -1,6 +1,7 @@
 import React from "react";
 import { ReactSVG } from "react-svg";
-import BerryLogo from "../../../images/BerryLogo.svg";
+import REDBERRYLogo from "../../../images/BerryLogo.svg";
+import { Link } from "react-router-dom";
 const BerryBlogHeader = () => {
   return (
     <div
@@ -13,7 +14,9 @@ const BerryBlogHeader = () => {
         borderBottom: "1px solid #E4E3EB",
       }}
     >
-      <ReactSVG src={BerryLogo} />
+      <Link to={"/"}>
+        <ReactSVG src={REDBERRYLogo} />
+      </Link>
     </div>
   );
 };

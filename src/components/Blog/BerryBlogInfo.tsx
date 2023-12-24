@@ -1,5 +1,6 @@
 import React from "react";
 import "./berrybloginfo.css";
+import { CategoryInterface } from "../../types/BerryBlogTypes";
 
 const BerryBlogInfo = ({ blog }: any) => {
   return (
@@ -57,8 +58,9 @@ const BerryBlogInfo = ({ blog }: any) => {
           </h1>
         </div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
-          {blog?.categories.map((item: any) => (
+          {blog?.categories.map((item: CategoryInterface) => (
             <h1
+              key={item.id}
               style={{
                 color: item.text_color,
                 background: item.background_color,

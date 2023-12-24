@@ -62,7 +62,14 @@ const BerryBlogCarousel = () => {
           <h1>მსგავსი სტატიები</h1>
         </div>
         <div style={{ display: "flex", gap: "24px" }}>
-          <button onClick={handlePrevClick} disabled={currentPage === 0}>
+          <button
+            onClick={handlePrevClick}
+            disabled={currentPage === 0}
+            // style={{
+            //   backgroundColor: currentPage === 0 ? "#E4E3EB" : "#5D37F3",
+            //   cursor: currentPage === 0 ? "not-allowed" : "pointer",
+            // }}
+          >
             <svg
               width="44"
               height="44"
@@ -78,7 +85,8 @@ const BerryBlogCarousel = () => {
                 rx="22"
                 transform="rotate(180 44 44)"
                 fill={
-                  currentPage === Math.ceil(divsPerPage / totalDivs) - 1
+                  currentPage === Math.ceil(divsPerPage / totalDivs) - 1 ||
+                  currentPage === 0
                     ? "#E4E3EB"
                     : "#5D37F3"
                 }

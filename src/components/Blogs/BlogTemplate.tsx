@@ -4,6 +4,7 @@ import groundImage from "../../images/ground.jpg";
 import Arrow from "../../images/Arrow.svg";
 import { ReactSVG } from "react-svg";
 import { Link } from "react-router-dom";
+import { BlogTemplateInterface } from "../../types/BerryBlogTypes";
 
 const BlogTemplate = ({
   id,
@@ -13,8 +14,8 @@ const BlogTemplate = ({
   description,
   publish_date,
   title,
-}: any) => {
-  const truncatedText = description.slice(0, 90).trim();
+}: BlogTemplateInterface) => {
+  const truncatedText = description.slice(0, 80).trim();
 
   const handleLinkClick = () => {
     window.scrollTo(0, 0);
@@ -99,6 +100,7 @@ const BlogTemplate = ({
             }}
           >
             {truncatedText}
+            {truncatedText.length < 80 ? null : "..."}
           </h3>
         </div>
 

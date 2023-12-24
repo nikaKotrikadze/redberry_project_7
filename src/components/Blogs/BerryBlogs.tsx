@@ -3,6 +3,10 @@ import "./berryblogs.css";
 import BlogTemplate from "./BlogTemplate";
 import { useBlogsStore } from "./blogs.store";
 import { useCategoryStore } from "../BlogNavigation/blogCategory.store";
+import {
+  BlogTemplateInterface,
+  CategoryInterface,
+} from "../../types/BerryBlogTypes";
 const BerryBlogs = () => {
   const { blogs, setBlogs }: any = useBlogsStore();
   const { selectedCategories }: any = useCategoryStore();
@@ -12,9 +16,9 @@ const BerryBlogs = () => {
   }, []);
 
   const filteredBlogs = selectedCategories.length
-    ? blogs.filter((blog: any) => {
+    ? blogs.filter((blog: BlogTemplateInterface) => {
         const blogCategories = blog.categories.map(
-          (category: any) => category.id
+          (category: CategoryInterface) => category.id
         );
         return selectedCategories.some((selectedCategory: number) =>
           blogCategories.includes(selectedCategory)
@@ -24,18 +28,20 @@ const BerryBlogs = () => {
 
   return (
     <div className="blogs-container">
-      {filteredBlogs.map((item: any) => (
-        <BlogTemplate
-          key={item.id}
-          id={item.id}
-          image={item.image}
-          author={item.author}
-          categories={item.categories}
-          description={item.description}
-          publish_date={item.publish_date}
-          title={item.title}
-        />
-      ))}
+      {filteredBlogs.map((item: BlogTemplateInterface) => {
+        return (
+          <BlogTemplate
+            key={item.id}
+            id={item.id}
+            image={item.image}
+            author={item.author}
+            categories={item.categories}
+            description={item.description}
+            publish_date={item.publish_date}
+            title={item.title}
+          />
+        );
+      })}
     </div>
   );
 };

@@ -6,11 +6,17 @@ import { useCategoryStore } from "../../BlogNavigation/blogCategory.store";
 import { $api } from "../../../utils/http";
 import { ReactSVG } from "react-svg";
 import emailErrorIcon from "../../../images/emailErrorIcon.svg";
+import calendarIcon from "../../../images/calendarIcon.svg";
 import {
   useBlogAddedSuccessfullyModalStore,
   useFileStore,
 } from "./blogadder.store";
 import BerryBlogAdderSuccessModal from "./BerryBlogAdderSuccessModal";
+import {
+  CategoryInterface,
+  SelectedCategoryInterface,
+} from "../../../types/BerryBlogTypes";
+
 const BerryBlogAdderInputs = () => {
   const { categories, setCategories }: any = useCategoryStore();
   const { base64String, setUploadedFile }: any = useFileStore();
@@ -30,6 +36,15 @@ const BerryBlogAdderInputs = () => {
       ...storedForm,
     };
   });
+  const [isInputFocused, setIsInputFocused] = useState(false);
+
+  const handleInputFocus = () => {
+    setIsInputFocused(true);
+  };
+
+  const handleInputBlur = () => {
+    setIsInputFocused(false);
+  };
 
   const handleFormChange = (e: any) => {
     const { name, value } = e.target;
@@ -40,7 +55,9 @@ const BerryBlogAdderInputs = () => {
     }));
 
     if (name === "categories") {
-      const categoryIds = value.map((category: any) => category.id);
+      const categoryIds = value.map((category: CategoryInterface) => {
+        return category.id;
+      });
       setForm((prevForm: any) => ({
         ...prevForm,
         category: categoryIds,
@@ -106,17 +123,17 @@ const BerryBlogAdderInputs = () => {
       try {
         const response = await $api.get("/categories");
         const newCategories = response.data.data;
-        console.log("newCategories", newCategories);
 
         setCategories(newCategories);
-
-        const categoryOptions = newCategories.map((i: any) => ({
-          id: i.id,
-          value: i.title,
-          label: i.title,
-          text_color: i.text_color,
-          background_color: i.background_color,
-        }));
+        const categoryOptions = newCategories.map((i: CategoryInterface) => {
+          return {
+            id: i.id,
+            value: i.title,
+            label: i.title,
+            text_color: i.text_color,
+            background_color: i.background_color,
+          };
+        });
 
         setOptions(categoryOptions);
       } catch (error) {
@@ -137,7 +154,7 @@ const BerryBlogAdderInputs = () => {
       border: `1px solid ${
         form.category.length >= 1
           ? "#14D81C"
-          : form.category.length == 0
+          : form.category.length === 0
           ? "#E4E3EB"
           : "#EA1919"
       }`,
@@ -147,10 +164,25 @@ const BerryBlogAdderInputs = () => {
       fontSize: "14px",
       lineHeight: "20px",
     }),
+    // menu: (styles: any) => ({
+    //   ...styles,
+    // }),
+    option: (styles: any, { data, isDisabled, isFocused, isSelected }: any) => {
+      return {
+        background: data.background_color,
+        color: data.text_color,
+        padding: "8px 16px",
+        fontWeight: 500,
+        fontSize: "12px",
+        lineHeight: "16px",
+        cursor: "pointer",
+      };
+    },
+
     multiValue: (styles: any, { data }: any) => {
       return {
         ...styles,
-        color: "white",
+        color: data.text_color,
         backgroundColor: data.background_color,
         borderRadius: "12px",
       };
@@ -170,19 +202,24 @@ const BerryBlogAdderInputs = () => {
 
   const Selector = () => (
     <Select
-      value={options.filter((option: any) => form.category.includes(option.id))}
+      value={options.filter((option: CategoryInterface) => {
+        return form.category.includes(option.id);
+      })}
       onChange={(selectedOptions: any) => {
         setForm((prevForm: any) => ({
           ...prevForm,
-          category: selectedOptions.map((option: any) => option.id),
+          category: selectedOptions.map(
+            (option: CategoryInterface) => option.id
+          ),
         }));
       }}
       defaultValue={[]}
       closeMenuOnSelect={false}
+      isClearable={false}
       isMulti
       name="categories"
       options={options}
-      getOptionLabel={(option: any) => option.label}
+      getOptionLabel={(option: SelectedCategoryInterface) => option.label}
       getOptionValue={(option: any) => option.id}
       styles={colourStyles}
       className="basic-multi-select"
@@ -240,18 +277,21 @@ const BerryBlogAdderInputs = () => {
                 name="author"
                 value={form.author}
                 onChange={handleFormChange}
+                onFocus={handleInputFocus}
+                onBlur={handleInputBlur}
                 placeholder="შეიყვანეთ ავტორი"
                 className="blog-adder-inputs-input"
                 style={{
                   border: `1px solid ${
-                    form.author.length >= 4
+                    isInputFocused
+                      ? "#5D37F3" // Border color when focused
+                      : form.author.length >= 4
                       ? "#14D81C"
-                      : form.author.length === 0 || form.author == ""
+                      : form.author.length === 0 || form.author === ""
                       ? "#E4E3EB"
                       : "#EA1919"
                   }`,
                   borderRadius: "12px",
-
                   background:
                     form.author.length >= 4 &&
                     form.author.split(" ").length >= 2 &&
@@ -281,7 +321,8 @@ const BerryBlogAdderInputs = () => {
                   className="blog-inputs-bullet-points"
                   style={{
                     color:
-                      form.author.split(" ").length >= 2
+                      form.author.split(" ").length >= 2 &&
+                      form.author.split(" ")?.[1]?.length !== 0
                         ? "#14D81C"
                         : form.author == ""
                         ? ""
@@ -408,6 +449,8 @@ const BerryBlogAdderInputs = () => {
               <label className="blog-adder-inputs-label">
                 გამოქვეყნების თარიღი *
               </label>
+
+              {/* <ReactSVG src={calendarIcon} /> */}
               <input
                 name="date"
                 value={form.date}
@@ -431,6 +474,7 @@ const BerryBlogAdderInputs = () => {
                 }}
               />
             </div>
+
             {/* category selector */}
             <div
               style={{
@@ -501,6 +545,7 @@ const BerryBlogAdderInputs = () => {
             !form.author ||
             form.author.length < 4 ||
             form.author.split(" ").length < 2 ||
+            form.author.split(" ")?.[1]?.length == 0 ||
             !form.title ||
             form.title.length < 2 ||
             !form.description ||
@@ -516,6 +561,7 @@ const BerryBlogAdderInputs = () => {
               !form.author ||
               form.author.length < 4 ||
               form.author.split(" ").length < 2 ||
+              form.author.split(" ")?.[1]?.length == 0 ||
               !isGeorgianSymbol(form.author) ||
               !form.title ||
               form.title.length < 2 ||
