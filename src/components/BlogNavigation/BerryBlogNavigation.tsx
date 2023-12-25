@@ -17,35 +17,37 @@ const BerryBlogNavigation = () => {
   }, []);
 
   return (
-    <div className="blog-navigation-container">
-      {categories.map((item: CategoryInterface) => {
-        return (
-          <button
-            key={item.id}
-            onClick={() => toggleCategorySelection(item.id)}
-            style={{
-              background: item.background_color,
-              border: selectedCategories.includes(item.id)
-                ? "1px solid black"
-                : "none",
-              padding: "8px 16px 8px 16px",
-              borderRadius: "30px",
-              cursor: "pointer",
-            }}
-          >
-            <h5
+    <div className="blog-navigation">
+      <div className="blog-navigation-container">
+        {categories.map((item: CategoryInterface) => {
+          return (
+            <button
+              key={item.id}
+              onClick={() => toggleCategorySelection(item.id)}
               style={{
-                color: item.text_color,
-                fontSize: "12px",
-                lineHeight: "16px",
-                fontWeight: "500",
+                background: item.background_color,
+                border: selectedCategories.includes(item.id)
+                  ? "1px solid black"
+                  : "none",
+                padding: "8px 16px 8px 16px",
+                borderRadius: "30px",
+                cursor: "pointer",
               }}
             >
-              {item.title}
-            </h5>
-          </button>
-        );
-      })}
+              <h5
+                style={{
+                  color: item.text_color,
+                  fontSize: "12px",
+                  lineHeight: "16px",
+                  fontWeight: "500",
+                }}
+              >
+                {item.title}
+              </h5>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 };

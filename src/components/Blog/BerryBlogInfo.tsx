@@ -3,10 +3,20 @@ import "./berrybloginfo.css";
 import { CategoryInterface } from "../../types/BerryBlogTypes";
 
 const BerryBlogInfo = ({ blog }: any) => {
+  const displayDescription = blog?.description.replace(/\r\n/g, "<br>");
+
   return (
     <div className="specific-blog-info-container">
       <div>
-        <img src={blog?.image} width={720} style={{ borderRadius: "12px" }} />
+        <img
+          src={blog?.image}
+          width={720}
+          height={328}
+          style={{
+            borderRadius: "12px",
+            objectFit: "cover",
+          }}
+        />
       </div>
       <div
         style={{
@@ -42,7 +52,7 @@ const BerryBlogInfo = ({ blog }: any) => {
               fontWeight: 400,
             }}
           >
-            {blog?.publish_date} • {blog?.email}
+            {blog?.publish_date} {blog?.email ? "•" : null} {blog?.email}
           </h1>
         </div>
         <div>
@@ -76,7 +86,7 @@ const BerryBlogInfo = ({ blog }: any) => {
           ))}
         </div>
       </div>
-      <div style={{ width: 720 }}>
+      <div style={{ width: 720, height: "auto" }}>
         <h1
           style={{
             color: "#404049",
@@ -84,9 +94,8 @@ const BerryBlogInfo = ({ blog }: any) => {
             fontWeight: 400,
             lineHeight: "28px",
           }}
-        >
-          {blog?.description}
-        </h1>
+          dangerouslySetInnerHTML={{ __html: displayDescription }}
+        />
       </div>
     </div>
   );

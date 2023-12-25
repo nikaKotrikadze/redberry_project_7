@@ -27,7 +27,7 @@ const BlogTemplate = ({
         src={image}
         width={408}
         height={328}
-        style={{ borderRadius: "12px" }}
+        style={{ borderRadius: "12px", objectFit: "cover" }}
       />
       {/* info container */}
       <div className="blog-info-container">
