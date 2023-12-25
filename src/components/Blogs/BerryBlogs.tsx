@@ -8,8 +8,8 @@ import {
   CategoryInterface,
 } from "../../types/BerryBlogTypes";
 const BerryBlogs = () => {
-  const { blogs, setBlogs }: any = useBlogsStore();
-  const { selectedCategories }: any = useCategoryStore();
+  const { blogs, setBlogs } = useBlogsStore();
+  const { selectedCategories } = useCategoryStore();
 
   useEffect(() => {
     setBlogs();

@@ -1,6 +1,9 @@
 import React from "react";
 import "./berrybloginfo.css";
-import { CategoryInterface } from "../../types/BerryBlogTypes";
+import {
+  BlogTemplateInterface,
+  CategoryInterface,
+} from "../../types/BerryBlogTypes";
 
 const BerryBlogInfo = ({ blog }: any) => {
   const displayDescription = blog?.description.replace(/\r\n/g, "<br>");

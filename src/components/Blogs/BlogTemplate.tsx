@@ -4,7 +4,11 @@ import groundImage from "../../images/ground.jpg";
 import Arrow from "../../images/Arrow.svg";
 import { ReactSVG } from "react-svg";
 import { Link } from "react-router-dom";
-import { BlogTemplateInterface } from "../../types/BerryBlogTypes";
+import {
+  BlogTemplateInterface,
+  CategoryInterface,
+} from "../../types/BerryBlogTypes";
+import { useCarouselStore } from "./blogs.store";
 
 const BlogTemplate = ({
   id,
@@ -17,8 +21,11 @@ const BlogTemplate = ({
 }: BlogTemplateInterface) => {
   const truncatedText = description.slice(0, 80).trim();
 
+  const { setHasCurrentPageReseted } = useCarouselStore();
+
   const handleLinkClick = () => {
     window.scrollTo(0, 0);
+    setHasCurrentPageReseted();
   };
 
   return (
@@ -73,7 +80,7 @@ const BlogTemplate = ({
             flexWrap: "wrap",
           }}
         >
-          {categories.map((item: any) => (
+          {categories.map((item: CategoryInterface) => (
             <h5
               key={item.id}
               style={{

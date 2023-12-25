@@ -10,7 +10,10 @@ import { BlogTemplateInterface } from "../../types/BerryBlogTypes";
 
 const BerryBlog = () => {
   const { id } = useParams();
-  const [blog, setBlog]: any = useState();
+  const [currentBlogId, setCurrentBlogId] = useState<string | undefined | null>(
+    null
+  );
+  const [blog, setBlog] = useState<BlogTemplateInterface | undefined>();
 
   useEffect(() => {
     const getBlogById = async () => {
@@ -18,13 +21,13 @@ const BerryBlog = () => {
         const response = await $api.get(`/blogs/${id}`);
         const newBlogs: BlogTemplateInterface = response.data;
         setBlog(newBlogs);
+        setCurrentBlogId(id);
       } catch (error) {
         console.error("Fetch error in Blogs", error);
       }
     };
     getBlogById();
   }, [id]);
-
   return (
     <>
       <BerryHeader />
@@ -35,7 +38,10 @@ const BerryBlog = () => {
       </div>
       <BerryBlogInfo blog={blog} />
       {/* CAROUSEL */}
-      <BerryBlogCarousel />
+      <BerryBlogCarousel
+        categories={blog?.categories}
+        currentBlogId={currentBlogId}
+      />
     </>
   );
 };

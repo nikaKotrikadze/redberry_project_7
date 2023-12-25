@@ -10,7 +10,7 @@ const BerryBlogNavigation = () => {
     setCategories,
     selectedCategories,
     toggleCategorySelection,
-  }: any = useCategoryStore();
+  } = useCategoryStore();
 
   useEffect(() => {
     setCategories();

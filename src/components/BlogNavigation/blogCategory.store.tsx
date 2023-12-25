@@ -1,7 +1,18 @@
 import { create } from "zustand";
 import { $api } from "../../utils/http";
+import {
+  CategoryInterface,
+  SelectedCategoryInterface,
+} from "../../types/BerryBlogTypes";
 
-export const useCategoryStore = create((set) => {
+interface CategoryStoreInterface {
+  categories: CategoryInterface[];
+  selectedCategories: number[];
+  setCategories: () => void;
+  toggleCategorySelection: (id: number | null) => void;
+}
+
+export const useCategoryStore = create<CategoryStoreInterface>((set) => {
   const savedSelectedCategories = JSON.parse(
     localStorage.getItem("selectedCategories") || "[]"
   );
