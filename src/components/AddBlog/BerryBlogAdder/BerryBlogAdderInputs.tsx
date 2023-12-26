@@ -1,21 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./berryblogadderinputs.css";
 import BerryImageDragAndDrop from "./BerryImageDragAndDrop";
-import Select from "react-select";
 import { useCategoryStore } from "../../BlogNavigation/blogCategory.store";
 import { $api } from "../../../utils/http";
-import { ReactSVG } from "react-svg";
-import emailErrorIcon from "../../../images/emailErrorIcon.svg";
-import calendarIcon from "../../../images/calendarIcon.svg";
 import {
   useBlogAddedSuccessfullyModalStore,
   useFileStore,
 } from "./blogadder.store";
 import BerryBlogAdderSuccessModal from "./BerryBlogAdderSuccessModal";
-import {
-  CategoryInterface,
-  SelectedCategoryInterface,
-} from "../../../types/BerryBlogTypes";
+import { CategoryInterface } from "../../../types/BerryBlogTypes";
 import BerryBlogSelector from "./BerryBlogSelector";
 import BerrySubmitButton from "./BerrySubmitButton";
 import BerryEmailInput from "./BerryEmailInput";
@@ -25,7 +18,7 @@ import BerryTitleInput from "./BerryTitleInput";
 import BerryAuthorInput from "./BerryAuthorInput";
 
 const BerryBlogAdderInputs = () => {
-  const { categories, setCategories }: any = useCategoryStore();
+  const { setCategories }: any = useCategoryStore();
   const { base64String, setUploadedFile }: any = useFileStore();
   const [options, setOptions] = useState([]);
   const { openModal }: any = useBlogAddedSuccessfullyModalStore();

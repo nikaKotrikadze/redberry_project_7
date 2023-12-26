@@ -9,7 +9,6 @@ import closeX from "../../images/close-x.svg";
 import tickCircle from "../../images/tick-circle.svg";
 import { $api } from "../../utils/http";
 import loginErrorIcon from "../../images/loginErrorIcon.svg";
-import { Link } from "react-router-dom";
 
 const BerryLoginModal = () => {
   const { isOpen, closeModal }: any = useLoginModalStore();

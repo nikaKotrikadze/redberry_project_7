@@ -1,9 +1,6 @@
 import { create } from "zustand";
 import { $api } from "../../utils/http";
-import {
-  CategoryInterface,
-  SelectedCategoryInterface,
-} from "../../types/BerryBlogTypes";
+import { CategoryInterface } from "../../types/BerryBlogTypes";
 
 interface CategoryStoreInterface {
   categories: CategoryInterface[];

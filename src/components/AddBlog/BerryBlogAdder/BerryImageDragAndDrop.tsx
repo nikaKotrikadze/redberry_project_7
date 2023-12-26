@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDropzone, FileRejection } from "react-dropzone";
 import FolderAddIcon from "../../../images/folder-add.svg";
 import { ReactSVG } from "react-svg";

@@ -21,7 +21,7 @@ const BerryTitleInput = ({ form, handleFormChange }: any) => {
           border: `1px solid ${
             form.title.length >= 2
               ? "#14D81C"
-              : form.title == ""
+              : form.title === ""
               ? "#E4E3EB"
               : "#EA1919"
           }`,
@@ -41,7 +41,7 @@ const BerryTitleInput = ({ form, handleFormChange }: any) => {
             color:
               form.title.length >= 2
                 ? "#14D81C"
-                : form.title == ""
+                : form.title === ""
                 ? ""
                 : "#EA1919",
           }}

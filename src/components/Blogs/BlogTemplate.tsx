@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./blogtemplate.css";
-import groundImage from "../../images/ground.jpg";
 import Arrow from "../../images/Arrow.svg";
 import { ReactSVG } from "react-svg";
 import { Link } from "react-router-dom";
@@ -31,6 +30,7 @@ const BlogTemplate = ({
   return (
     <div className="blog-template-container">
       <img
+        alt="blog"
         src={image}
         width={408}
         height={328}

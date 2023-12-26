@@ -10,9 +10,8 @@ import BerryLoginModal from "../Login/BerryLoginModal";
 import { Link } from "react-router-dom";
 
 const BerryHeader = () => {
-  const { openModal }: any = useLoginModalStore();
-  const { isSuccessful, clearSuccessfulLogin, email }: any =
-    useSuccessfulLoginRequestStore();
+  const { openModal } = useLoginModalStore();
+  const { isSuccessful } = useSuccessfulLoginRequestStore();
   const handleLoginClick = () => {
     openModal();
   };

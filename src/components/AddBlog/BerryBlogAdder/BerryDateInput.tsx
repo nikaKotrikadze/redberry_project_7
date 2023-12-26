@@ -21,7 +21,7 @@ const BerryDateInput = ({ form, handleFormChange }: any) => {
         className="blog-adder-inputs-input"
         style={{
           border: `1px solid ${
-            form.date ? "#14D81C" : form.date == "" ? "#E4E3EB" : "#EA1919"
+            form.date ? "#14D81C" : form.date === "" ? "#E4E3EB" : "#EA1919"
           }`,
           borderRadius: "12px",
           background: form.date

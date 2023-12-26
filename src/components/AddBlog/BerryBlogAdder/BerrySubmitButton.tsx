@@ -14,7 +14,7 @@ const BerrySubmitButton = ({
         !form.author ||
         form.author.length < 4 ||
         form.author.split(" ").length < 2 ||
-        form.author.split(" ")?.[1]?.length == 0 ||
+        form.author.split(" ")?.[1]?.length === 0 ||
         !form.title ||
         form.title.length < 2 ||
         !form.description ||
@@ -30,7 +30,7 @@ const BerrySubmitButton = ({
           !form.author ||
           form.author.length < 4 ||
           form.author.split(" ").length < 2 ||
-          form.author.split(" ")?.[1]?.length == 0 ||
+          form.author.split(" ")?.[1]?.length === 0 ||
           !isGeorgianSymbol(form.author) ||
           !form.title ||
           form.title.length < 2 ||

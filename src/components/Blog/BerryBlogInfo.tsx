@@ -1,9 +1,6 @@
 import React from "react";
 import "./berrybloginfo.css";
-import {
-  BlogTemplateInterface,
-  CategoryInterface,
-} from "../../types/BerryBlogTypes";
+import { CategoryInterface } from "../../types/BerryBlogTypes";
 
 const BerryBlogInfo = ({ blog }: any) => {
   const displayDescription = blog?.description.replace(/\r\n/g, "<br>");
@@ -12,6 +9,7 @@ const BerryBlogInfo = ({ blog }: any) => {
     <div className="specific-blog-info-container">
       <div>
         <img
+          alt="blog-info"
           src={blog?.image}
           width={720}
           height={328}
