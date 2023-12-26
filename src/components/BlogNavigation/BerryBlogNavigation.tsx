@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./berryblognavigation.css";
 import { useCategoryStore } from "./blogCategory.store";
-import { log } from "console";
 import { CategoryInterface } from "../../types/BerryBlogTypes";
 
 const BerryBlogNavigation = () => {
@@ -14,7 +13,7 @@ const BerryBlogNavigation = () => {
 
   useEffect(() => {
     setCategories();
-  }, []);
+  }, [setCategories]);
 
   return (
     <div className="blog-navigation">

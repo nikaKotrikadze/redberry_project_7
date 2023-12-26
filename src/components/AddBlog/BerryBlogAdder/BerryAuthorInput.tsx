@@ -51,7 +51,7 @@ const BerryAuthorInput = ({
             color:
               form.author.length >= 4
                 ? "#14D81C"
-                : form.author == ""
+                : form.author === ""
                 ? ""
                 : "#EA1919",
           }}
@@ -66,7 +66,7 @@ const BerryAuthorInput = ({
               form.author.split(" ").length >= 2 &&
               form.author.split(" ")?.[1]?.length !== 0
                 ? "#14D81C"
-                : form.author == ""
+                : form.author === ""
                 ? ""
                 : "#EA1919",
           }}
@@ -78,7 +78,7 @@ const BerryAuthorInput = ({
           style={{
             color: isGeorgianSymbol(form.author)
               ? "#14D81C"
-              : form.author == ""
+              : form.author === ""
               ? ""
               : "#EA1919",
           }}

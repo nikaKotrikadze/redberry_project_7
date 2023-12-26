@@ -13,7 +13,7 @@ const BerryBlogs = () => {
 
   useEffect(() => {
     setBlogs();
-  }, []);
+  }, [setBlogs]);
 
   const filteredBlogs = selectedCategories.length
     ? blogs.filter((blog: BlogTemplateInterface) => {

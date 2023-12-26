@@ -14,7 +14,7 @@ const BerryTextAreaInput = ({ form, handleFormChange }: any) => {
           border: `1px solid ${
             form.description.length >= 2
               ? "#14D81C"
-              : form.description == ""
+              : form.description === ""
               ? "#E4E3EB"
               : "#EA1919"
           }`,
@@ -33,7 +33,7 @@ const BerryTextAreaInput = ({ form, handleFormChange }: any) => {
           color:
             form.description.length >= 2
               ? "#14D81C"
-              : form.description == ""
+              : form.description === ""
               ? ""
               : "#EA1919",
         }}
