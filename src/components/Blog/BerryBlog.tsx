@@ -6,27 +6,28 @@ import { $api } from "../../utils/http";
 import { ReactSVG } from "react-svg";
 import GoBackArrow from "../../images/GoBackArrow.svg";
 import BerryBlogCarousel from "./BerryBlogCarousel";
+import { BlogTemplateInterface } from "../../types/BerryBlogTypes";
 
 const BerryBlog = () => {
   const { id } = useParams();
-  const [blog, setBlog]: any = useState();
-  console.log(useParams());
+  const [currentBlogId, setCurrentBlogId] = useState<string | undefined | null>(
+    null
+  );
+  const [blog, setBlog] = useState<BlogTemplateInterface | undefined>();
 
   useEffect(() => {
     const getBlogById = async () => {
       try {
         const response = await $api.get(`/blogs/${id}`);
-        const newBlogs = response.data;
+        const newBlogs: BlogTemplateInterface = response.data;
         setBlog(newBlogs);
+        setCurrentBlogId(id);
       } catch (error) {
         console.error("Fetch error in Blogs", error);
       }
     };
     getBlogById();
   }, [id]);
-
-  console.log(blog);
-
   return (
     <>
       <BerryHeader />
@@ -37,7 +38,10 @@ const BerryBlog = () => {
       </div>
       <BerryBlogInfo blog={blog} />
       {/* CAROUSEL */}
-      <BerryBlogCarousel />
+      <BerryBlogCarousel
+        categories={blog?.categories}
+        currentBlogId={currentBlogId}
+      />
     </>
   );
 };

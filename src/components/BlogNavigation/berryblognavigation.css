@@ -4,3 +4,17 @@
   align-items: center;
   gap: 24px;
 }
+
+@media (max-width: 1600px) {
+  .blog-navigation {
+    display: flex;
+    justify-content: center;
+  }
+  .blog-navigation-container {
+    display: flex;
+    justify-content: left;
+    gap: 24px;
+    width: 1400px;
+    overflow-x: auto;
+  }
+}

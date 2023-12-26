@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   useLoginModalStore,
   useSuccessfulLoginRequestStore,
@@ -9,6 +9,7 @@ import closeX from "../../images/close-x.svg";
 import tickCircle from "../../images/tick-circle.svg";
 import { $api } from "../../utils/http";
 import loginErrorIcon from "../../images/loginErrorIcon.svg";
+import { Link } from "react-router-dom";
 
 const BerryLoginModal = () => {
   const { isOpen, closeModal }: any = useLoginModalStore();
@@ -35,7 +36,7 @@ const BerryLoginModal = () => {
   return (
     <div>
       {isOpen && (
-        <div className="modal-overlay" onClick={closeModal}>
+        <div className="modal-overlay">
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <button onClick={closeModal} className="modal-close-button">
               <ReactSVG src={closeX} />
@@ -48,6 +49,7 @@ const BerryLoginModal = () => {
                   flexDirection: "column",
                   alignItems: "center",
                   gap: "48px",
+                  paddingTop: "24px",
                 }}
               >
                 <div
@@ -118,7 +120,7 @@ const BerryLoginModal = () => {
                   <label
                     style={{
                       color: "#1A1A1F",
-                      fontWeight: "500",
+                      fontWeight: 500,
                       fontSize: "14px",
                       lineHeight: "20px",
                     }}

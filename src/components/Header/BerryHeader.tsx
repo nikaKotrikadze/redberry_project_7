@@ -14,13 +14,14 @@ const BerryHeader = () => {
   const { isSuccessful, clearSuccessfulLogin, email }: any =
     useSuccessfulLoginRequestStore();
   const handleLoginClick = () => {
-    console.log("logiiin");
     openModal();
   };
 
   return (
     <header className="header-container">
-      <ReactSVG src={REDBERRYLogo} />
+      <Link to={"/"}>
+        <ReactSVG src={REDBERRYLogo} />
+      </Link>
       <BerryLoginModal />
       {isSuccessful ? (
         <>

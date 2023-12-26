@@ -9,7 +9,7 @@ export const useLoginModalStore = create((set) => ({
 export const useSuccessfulLoginRequestStore = create((set) => ({
   isSuccessful: localStorage.getItem("isSuccessful") === "true" || false,
   email: localStorage.getItem("email") || null,
-  setIsSuccessful: (email: any) => {
+  setIsSuccessful: (email: string) => {
     localStorage.setItem("isSuccessful", "true");
     localStorage.setItem("email", email);
     set({ isSuccessful: true, email });

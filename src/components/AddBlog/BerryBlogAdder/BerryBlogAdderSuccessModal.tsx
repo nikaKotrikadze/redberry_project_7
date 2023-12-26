@@ -13,9 +13,11 @@ const BerryBlogAdderSuccessModal = () => {
     isOpen && (
       <div className="modal-overlay" onClick={closeModal}>
         <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-          <button onClick={closeModal} className="modal-close-button">
-            <ReactSVG src={closeX} />
-          </button>
+          <Link to={"/"}>
+            <button onClick={closeModal} className="modal-close-button">
+              <ReactSVG src={closeX} />
+            </button>
+          </Link>
           <div
             style={{
               width: "100%",
@@ -23,6 +25,7 @@ const BerryBlogAdderSuccessModal = () => {
               flexDirection: "column",
               alignItems: "center",
               gap: "48px",
+              paddingTop: "24px",
             }}
           >
             <div

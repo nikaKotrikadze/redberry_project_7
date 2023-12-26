@@ -1,51 +1,89 @@
 import React, { useEffect, useState } from "react";
 import "./berryblogcarousel.css";
-import { useBlogsStore } from "../Blogs/blogs.store";
+import { useBlogsStore, useCarouselStore } from "../Blogs/blogs.store";
 import BlogTemplate from "../Blogs/BlogTemplate";
+import {
+  BlogTemplateInterface,
+  CategoryInterface,
+} from "../../types/BerryBlogTypes";
 
-const BerryBlogCarousel = () => {
-  const { blogs, setBlogs }: any = useBlogsStore();
+const BerryBlogCarousel = ({ categories, currentBlogId }: any) => {
+  const { blogs, setBlogs } = useBlogsStore();
   const totalDivs = blogs.length;
   const divsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(0);
+  const [filteredBlogs, setFilteredBlogs] = useState<BlogTemplateInterface[]>(
+    []
+  );
+  const { hasCurrentPageReseted, resetCurrentPage } = useCarouselStore();
 
   useEffect(() => {
     setBlogs();
-  }, []);
+  }, [setBlogs]);
+
+  useEffect(() => {
+    if (hasCurrentPageReseted) {
+      setCurrentPage(0);
+    }
+  }, [hasCurrentPageReseted]);
+  console.log("currentPage", currentPage);
+  console.log("hasCurrentPageReseted", hasCurrentPageReseted);
+
+  useEffect(() => {
+    setFilteredBlogs(
+      blogs
+        .filter((blog: BlogTemplateInterface) =>
+          blog?.categories?.some((category: CategoryInterface) =>
+            categories?.some(
+              (selectedCategory: CategoryInterface) =>
+                selectedCategory?.id === category.id
+            )
+          )
+        )
+        .filter((blog: BlogTemplateInterface) => blog.id !== currentBlogId)
+    );
+  }, [blogs, categories, currentBlogId]);
 
   const handleNextClick = () => {
     setCurrentPage(
-      (prevPage) => (prevPage + 1) % Math.ceil(totalDivs / divsPerPage)
+      (prevPage) =>
+        (prevPage + 1) % Math.ceil(filteredBlogs.length / divsPerPage)
     );
+    resetCurrentPage();
   };
 
   const handlePrevClick = () => {
     setCurrentPage(
       (prevPage) =>
-        (prevPage - 1 + Math.ceil(totalDivs / divsPerPage)) %
-        Math.ceil(totalDivs / divsPerPage)
+        (prevPage - 1 + Math.ceil(filteredBlogs.length / divsPerPage)) %
+        Math.ceil(filteredBlogs.length / divsPerPage)
     );
   };
 
   const renderDivs = () => {
+    if (filteredBlogs.length === 0) {
+      return <p>No similar blogs</p>;
+    }
+
     const startIndex = currentPage * divsPerPage;
     const endIndex = startIndex + divsPerPage;
 
     const divs = [];
-    for (let i = startIndex; i < endIndex && i < totalDivs; i++) {
+    for (let i = startIndex; i < endIndex && i < filteredBlogs.length; i++) {
       divs.push(
         <BlogTemplate
           key={i}
-          id={blogs[i].id}
-          image={blogs[i].image}
-          author={blogs[i].author}
-          categories={blogs[i].categories}
-          description={blogs[i].description}
-          publish_date={blogs[i].publish_date}
-          title={blogs[i].title}
+          id={filteredBlogs[i].id}
+          image={filteredBlogs[i].image}
+          author={filteredBlogs[i].author}
+          categories={filteredBlogs[i].categories}
+          description={filteredBlogs[i].description}
+          publish_date={filteredBlogs[i].publish_date}
+          title={filteredBlogs[i].title}
         />
       );
     }
+
     return divs;
   };
 
@@ -78,7 +116,8 @@ const BerryBlogCarousel = () => {
                 rx="22"
                 transform="rotate(180 44 44)"
                 fill={
-                  currentPage === Math.ceil(divsPerPage / totalDivs) - 1
+                  currentPage === Math.ceil(divsPerPage / totalDivs) - 1 ||
+                  currentPage === 0
                     ? "#E4E3EB"
                     : "#5D37F3"
                 }
@@ -91,7 +130,10 @@ const BerryBlogCarousel = () => {
           </button>
           <button
             onClick={handleNextClick}
-            disabled={currentPage === Math.ceil(totalDivs / divsPerPage) - 1}
+            disabled={
+              filteredBlogs.length === 0 ||
+              currentPage === Math.ceil(filteredBlogs.length / divsPerPage) - 1
+            }
           >
             <svg
               width="44"
@@ -108,7 +150,9 @@ const BerryBlogCarousel = () => {
                 rx="22"
                 transform="rotate(180 44 44)"
                 fill={
-                  currentPage === Math.ceil(totalDivs / divsPerPage) - 1
+                  filteredBlogs.length === 0 ||
+                  currentPage ===
+                    Math.ceil(filteredBlogs.length / divsPerPage) - 1
                     ? "#E4E3EB"
                     : "#5D37F3"
                 }
