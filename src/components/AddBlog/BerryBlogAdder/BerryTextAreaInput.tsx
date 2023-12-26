@@ -3,7 +3,16 @@ import React from "react";
 const BerryTextAreaInput = ({ form, handleFormChange }: any) => {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-      <label className="blog-adder-inputs-label">აღწერა *</label>
+      <label
+        style={{
+          color: "#1A1A1F",
+          fontSize: "14px",
+          fontWeight: 500,
+          lineHeight: "20px",
+        }}
+      >
+        აღწერა *
+      </label>
       <textarea
         name="description"
         value={form.description}

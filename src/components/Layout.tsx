@@ -8,7 +8,6 @@ const Layout = () => {
   return (
     <>
       <BerryHeader />
-
       <BerryHero />
       <BerryBlogNavigation />
       <BerryBlogs />

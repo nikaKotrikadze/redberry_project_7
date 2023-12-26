@@ -9,13 +9,13 @@ import {
 } from "./blogadder.store";
 import BerryBlogAdderSuccessModal from "./BerryBlogAdderSuccessModal";
 import { CategoryInterface } from "../../../types/BerryBlogTypes";
-import BerryBlogSelector from "./BerryBlogSelector";
 import BerrySubmitButton from "./BerrySubmitButton";
 import BerryEmailInput from "./BerryEmailInput";
 import BerryDateInput from "./BerryDateInput";
 import BerryTextAreaInput from "./BerryTextAreaInput";
 import BerryTitleInput from "./BerryTitleInput";
 import BerryAuthorInput from "./BerryAuthorInput";
+import BerryBlogMultiSelector from "./BerryBlogMultiSelector";
 
 const BerryBlogAdderInputs = () => {
   const { setCategories }: any = useCategoryStore();
@@ -165,7 +165,7 @@ const BerryBlogAdderInputs = () => {
               style={{
                 color: "#1A1A1F",
                 fontSize: "14px",
-                fontWeight: "500",
+                fontWeight: 500,
                 lineHeight: "20px",
               }}
             >
@@ -200,8 +200,22 @@ const BerryBlogAdderInputs = () => {
                 width: "280px",
               }}
             >
-              <label className="blog-adder-inputs-label">კატეგორია *</label>
-              <BerryBlogSelector
+              <label
+                style={{
+                  color: "#1A1A1F",
+                  fontSize: "14px",
+                  fontWeight: 500,
+                  lineHeight: "20px",
+                }}
+              >
+                კატეგორია *
+              </label>
+              {/* <BerryBlogSelector
+                form={form}
+                setForm={setForm}
+                options={options}
+              /> */}
+              <BerryBlogMultiSelector
                 form={form}
                 setForm={setForm}
                 options={options}

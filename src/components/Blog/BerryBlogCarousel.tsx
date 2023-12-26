@@ -26,8 +26,6 @@ const BerryBlogCarousel = ({ categories, currentBlogId }: any) => {
       setCurrentPage(0);
     }
   }, [hasCurrentPageReseted]);
-  console.log("currentPage", currentPage);
-  console.log("hasCurrentPageReseted", hasCurrentPageReseted);
 
   useEffect(() => {
     setFilteredBlogs(

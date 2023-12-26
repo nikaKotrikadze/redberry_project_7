@@ -10,7 +10,16 @@ const BerryTitleInput = ({ form, handleFormChange }: any) => {
         width: "280px",
       }}
     >
-      <label className="blog-adder-inputs-label">სათაური *</label>
+      <label
+        style={{
+          color: "#1A1A1F",
+          fontSize: "14px",
+          fontWeight: 500,
+          lineHeight: "20px",
+        }}
+      >
+        სათაური *
+      </label>
       <input
         name="title"
         value={form.title}

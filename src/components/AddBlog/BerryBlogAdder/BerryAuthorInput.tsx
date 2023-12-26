@@ -1,4 +1,5 @@
 import React from "react";
+import "./berryblogadderinputs.css";
 
 const BerryAuthorInput = ({
   form,
@@ -14,7 +15,16 @@ const BerryAuthorInput = ({
         width: "280px",
       }}
     >
-      <label className="blog-adder-inputs-label">ავტორი *</label>
+      <label
+        style={{
+          color: "#1A1A1F",
+          fontSize: "14px",
+          fontWeight: 500,
+          lineHeight: "20px",
+        }}
+      >
+        ავტორი *
+      </label>
       <input
         name="author"
         value={form.author}

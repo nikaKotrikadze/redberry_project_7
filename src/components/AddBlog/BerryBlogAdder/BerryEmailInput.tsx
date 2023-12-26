@@ -12,7 +12,16 @@ const BerryEmailInput = ({ form, handleFormChange }: any) => {
         width: "280px",
       }}
     >
-      <label className="blog-adder-inputs-label">ელ-ფოსტა</label>
+      <label
+        style={{
+          color: "#1A1A1F",
+          fontSize: "14px",
+          fontWeight: 500,
+          lineHeight: "20px",
+        }}
+      >
+        ელ-ფოსტა
+      </label>
       <input
         name="email"
         value={form.email}
