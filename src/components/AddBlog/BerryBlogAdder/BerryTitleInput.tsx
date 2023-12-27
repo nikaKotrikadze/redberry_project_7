@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
 const BerryTitleInput = ({ form, handleFormChange }: any) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const hoverStyles = {
+    backgroundColor: "#F9F9FA",
+  };
+
   return (
     <div
       style={{
@@ -21,6 +26,8 @@ const BerryTitleInput = ({ form, handleFormChange }: any) => {
         სათაური *
       </label>
       <input
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         name="title"
         value={form.title}
         onChange={handleFormChange}
@@ -41,6 +48,7 @@ const BerryTitleInput = ({ form, handleFormChange }: any) => {
               : form.title.length === 0
               ? "#FCFCFD"
               : "#FAF2F3",
+          ...(isHovered ? hoverStyles : {}),
         }}
       />
       <div>

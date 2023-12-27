@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 
 const BerryDateInput = ({ form, handleFormChange }: any) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const hoverStyles = {
+    backgroundColor: "#F9F9FA",
+  };
   return (
     <div
       style={{
@@ -21,14 +25,20 @@ const BerryDateInput = ({ form, handleFormChange }: any) => {
         გამოქვეყნების თარიღი *
       </label>
 
-      {/* <ReactSVG src={calendarIcon} /> */}
       <input
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         name="date"
         value={form.date}
         onChange={handleFormChange}
         type="date"
-        className="blog-adder-inputs-input"
         style={{
+          fontSize: 14,
+          fontWeight: 400,
+          lineHeight: "20px",
+          flexDirection: "row-reverse",
+          alignItems: "center",
+          gap: 12,
           height: "44px",
           padding: "0px 16px",
           margin: 0,
@@ -42,6 +52,7 @@ const BerryDateInput = ({ form, handleFormChange }: any) => {
             : form.date.length === 0
             ? "#FCFCFD"
             : "#FAF2F3",
+          ...(isHovered ? hoverStyles : {}),
         }}
       />
     </div>

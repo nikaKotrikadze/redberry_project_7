@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { ReactSVG } from "react-svg";
 import emailErrorIcon from "../../../images/emailErrorIcon.svg";
 
 const BerryEmailInput = ({ form, handleFormChange }: any) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const hoverStyles = {
+    backgroundColor: "#F9F9FA",
+  };
+
   return (
     <div
       style={{
@@ -23,6 +28,8 @@ const BerryEmailInput = ({ form, handleFormChange }: any) => {
         ელ-ფოსტა
       </label>
       <input
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         name="email"
         value={form.email}
         onChange={handleFormChange}
@@ -42,6 +49,7 @@ const BerryEmailInput = ({ form, handleFormChange }: any) => {
               : form.email.length === 0
               ? "#FCFCFD"
               : "#FAF2F3",
+          ...(isHovered ? hoverStyles : {}),
         }}
       />
       {!form.email.endsWith("@redberry.ge") && form.email.length > 0 && (

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Multiselect from "multiselect-react-dropdown";
 import { CategoryInterface } from "../../../types/BerryBlogTypes";
 import { ReactSVG } from "react-svg";
 import removeCategoryIcon from "../../../images/removeCategoryIcon.svg";
+import ArrowDownCategoryIcon from "../../../images/ArrowDownCategory.svg";
 interface Option {
   name: string;
   id: number;
@@ -10,6 +11,15 @@ interface Option {
 
 const BerryBlogMultiSelector = ({ form, setForm, options }: any) => {
   const [selectedValues, setSelectedValues] = useState<Option[]>([]);
+
+  useEffect(() => {
+    const initiallySelectedCategories = options.filter(
+      (option: CategoryInterface) => {
+        return form.category.includes(option.id);
+      }
+    );
+    setSelectedValues(initiallySelectedCategories);
+  }, [form.category, options]);
 
   const onSelect = (selectedList: Option[], selectedItem: Option) => {
     setSelectedValues(selectedList);
@@ -35,16 +45,19 @@ const BerryBlogMultiSelector = ({ form, setForm, options }: any) => {
       gap: 8,
       minHeight: "44px",
       borderRadius: "12px",
-      paddingLeft: 6,
-      backgroundColor: "#fcfcfd",
-      fontWeight: 400,
-      fontSize: "14px",
-      lineHeight: "20px",
+      paddingLeft: 16,
+      paddingRight: 0,
+      background: `url(${ArrowDownCategoryIcon}) right 12px center no-repeat ${
+        form.category.length >= 1 ? "#F8FFF8" : "#fcfcfd"
+      }`,
+
+      backgroundColor: form.category.length >= 1 ? "#F8FFF8" : "#fcfcfd",
+
       overflowX: "auto",
       border: `1px solid ${
-        selectedValues.length === 0
+        form.category.length === 0
           ? "#E4E3EB"
-          : selectedValues.length >= 1
+          : form.category.length >= 1
           ? "#14D81C"
           : "#EA1919"
       }`,
@@ -75,8 +88,12 @@ const BerryBlogMultiSelector = ({ form, setForm, options }: any) => {
       borderRadius: "30px",
       background: "transparent",
     },
+    inputField: {
+      fontSize: 14,
+      fontWeight: 400,
+      lineHeight: "20px",
+    },
   };
-  console.log(form);
 
   return (
     <Multiselect

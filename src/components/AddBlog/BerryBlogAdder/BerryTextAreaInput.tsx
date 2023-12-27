@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
 const BerryTextAreaInput = ({ form, handleFormChange }: any) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const hoverStyles = {
+    backgroundColor: "#F9F9FA",
+  };
+
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
       <label
@@ -14,6 +19,8 @@ const BerryTextAreaInput = ({ form, handleFormChange }: any) => {
         აღწერა *
       </label>
       <textarea
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         name="description"
         value={form.description}
         onChange={handleFormChange}
@@ -34,6 +41,7 @@ const BerryTextAreaInput = ({ form, handleFormChange }: any) => {
               : form.description.length === 0
               ? "#FCFCFD"
               : "#FAF2F3",
+          ...(isHovered ? hoverStyles : {}),
         }}
       ></textarea>
       <h3

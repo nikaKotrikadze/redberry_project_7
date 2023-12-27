@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./berryblogadderinputs.css";
 
 const BerryAuthorInput = ({
@@ -6,6 +6,13 @@ const BerryAuthorInput = ({
   handleFormChange,
   isGeorgianSymbol,
 }: any) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+
+  const hoverStyles = {
+    backgroundColor: "#F9F9FA",
+  };
+
   return (
     <div
       style={{
@@ -26,6 +33,9 @@ const BerryAuthorInput = ({
         ავტორი *
       </label>
       <input
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onFocus={() => setIsFocused(true)}
         name="author"
         value={form.author}
         onChange={handleFormChange}
@@ -52,6 +62,7 @@ const BerryAuthorInput = ({
               : form.author.length === 0
               ? "#FCFCFD"
               : "#FAF2F3",
+          ...(isHovered ? hoverStyles : {}),
         }}
       />
       <div>

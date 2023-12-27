@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDropzone, FileRejection } from "react-dropzone";
 import FolderAddIcon from "../../../images/folder-add.svg";
 import { ReactSVG } from "react-svg";
@@ -8,6 +8,7 @@ import { useFileStore } from "./blogadder.store";
 
 const BerryImageDragAndDrop = () => {
   const { uploadedFileName, setUploadedFile } = useFileStore();
+  const [isHovered, setIsHovered] = useState(false);
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles: File[], fileRejections: FileRejection[]) => {
@@ -48,11 +49,19 @@ const BerryImageDragAndDrop = () => {
     };
   };
 
+  const hoverStyles = {
+    backgroundColor: "#F1EFFB",
+    cursor: "pointer",
+  };
+
   return (
     <>
       {!uploadedFileName || uploadedFileName === "null" ? (
         <div
-          {...getRootProps()}
+          {...getRootProps({
+            onMouseEnter: () => setIsHovered(true),
+            onMouseLeave: () => setIsHovered(false),
+          })}
           style={{
             display: "flex",
             flexDirection: "column",
@@ -64,6 +73,7 @@ const BerryImageDragAndDrop = () => {
             borderStyle: "dashed",
             borderRadius: "12px",
             gap: "24px",
+            ...(isHovered ? hoverStyles : {}),
           }}
         >
           <input {...getInputProps()} accept="image/*" />
