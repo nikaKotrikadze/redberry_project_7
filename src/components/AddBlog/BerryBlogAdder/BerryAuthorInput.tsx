@@ -7,9 +7,36 @@ const BerryAuthorInput = ({
   isGeorgianSymbol,
 }: any) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+
+  const focusedStyles = {
+    border: "1.5px solid #5D37F3",
+    background: "#F7F7FF",
+  };
 
   const hoverStyles = {
     background: "#F9F9FA",
+  };
+
+  const isValid =
+    form.author.length >= 4 &&
+    form.author.split(" ").length >= 2 &&
+    form.author.split(" ")?.[1]?.length !== 0 &&
+    isGeorgianSymbol(form.author.trim());
+
+  const inputStyles = {
+    border: `1px solid ${
+      isValid ? "#14D81C" : form.author.length === 0 ? "#E4E3EB" : "#EA1919"
+    }`,
+    ...(isFocused && form.author.length === 0 ? focusedStyles : {}),
+    borderRadius: "12px",
+    background: isValid
+      ? "#F8FFF8"
+      : form.author.length === 0
+      ? "#FCFCFD"
+      : "#FAF2F3",
+    outline: "none",
+    ...(isHovered ? hoverStyles : {}),
   };
 
   return (
@@ -34,34 +61,14 @@ const BerryAuthorInput = ({
       <input
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
         name="author"
         value={form.author}
         onChange={handleFormChange}
         placeholder="შეიყვანეთ ავტორი"
         className="blog-adder-inputs-input"
-        style={{
-          border: `1px solid ${
-            form.author.length >= 4 &&
-            form.author.split(" ").length >= 2 &&
-            form.author.split(" ")?.[1]?.length !== 0 &&
-            isGeorgianSymbol(form.author.trim())
-              ? "#14D81C"
-              : form.author.length === 0
-              ? "#E4E3EB"
-              : "#EA1919"
-          }`,
-          borderRadius: "12px",
-          background:
-            form.author.length >= 4 &&
-            form.author.split(" ").length >= 2 &&
-            form.author.split(" ")?.[1]?.length !== 0 &&
-            isGeorgianSymbol(form.author.trim())
-              ? "#F8FFF8"
-              : form.author.length === 0
-              ? "#FCFCFD"
-              : "#FAF2F3",
-          ...(isHovered ? hoverStyles : {}),
-        }}
+        style={inputStyles}
       />
       <div>
         <li
