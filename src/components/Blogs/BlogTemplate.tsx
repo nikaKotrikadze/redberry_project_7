@@ -45,6 +45,7 @@ const BlogTemplate = ({
               fontSize: "16px",
               fontWeight: "500",
               lineHeight: "20px",
+              wordBreak: "break-all",
             }}
           >
             {author}
@@ -67,6 +68,7 @@ const BlogTemplate = ({
               fontSize: "20px",
               fontWeight: "500",
               lineHeight: "28px",
+              wordBreak: "break-all",
             }}
           >
             {title}
@@ -104,6 +106,7 @@ const BlogTemplate = ({
               fontSize: "16px",
               lineHeight: "28px",
               fontWeight: "400",
+              wordBreak: "break-all",
             }}
           >
             {truncatedText}

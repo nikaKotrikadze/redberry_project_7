@@ -63,3 +63,17 @@
   font-size: 14px;
   line-height: 20px;
 }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  color: rgba(0, 0, 0, 0);
+  opacity: 1;
+  display: block;
+  background: url("../../../images/calendarIcon.svg") no-repeat;
+  width: 20px;
+  height: 20px;
+  border-width: thin;
+}
+
+input:focus {
+  border: 1px solid blue;
+}

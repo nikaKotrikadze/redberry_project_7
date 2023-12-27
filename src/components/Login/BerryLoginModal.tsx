@@ -9,6 +9,7 @@ import closeX from "../../images/close-x.svg";
 import tickCircle from "../../images/tick-circle.svg";
 import { $api } from "../../utils/http";
 import loginErrorIcon from "../../images/loginErrorIcon.svg";
+import { Link } from "react-router-dom";
 
 const BerryLoginModal = () => {
   const { isOpen, closeModal }: any = useLoginModalStore();
@@ -37,9 +38,17 @@ const BerryLoginModal = () => {
       {isOpen && (
         <div className="modal-overlay">
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button onClick={closeModal} className="modal-close-button">
-              <ReactSVG src={closeX} />
-            </button>
+            {isLoginSuccess ? (
+              <Link to={"/"}>
+                <button onClick={closeModal} className="modal-close-button">
+                  <ReactSVG src={closeX} />
+                </button>
+              </Link>
+            ) : (
+              <button onClick={closeModal} className="modal-close-button">
+                <ReactSVG src={closeX} />
+              </button>
+            )}
             {isLoginSuccess ? (
               <div
                 style={{
@@ -71,22 +80,23 @@ const BerryLoginModal = () => {
                     წარმატებული ავტორიზაცია
                   </h1>
                 </div>
-
-                <button
-                  style={{
-                    width: "100%",
-                    backgroundColor: "#5D37F3",
-                    color: "#FFFFFF",
-                    fontSize: "14px",
-                    fontWeight: "500",
-                    lineHeight: "20px",
-                    padding: "10px 20px 10px 20px",
-                    borderRadius: "8px",
-                  }}
-                  onClick={closeModal}
-                >
-                  კარგი
-                </button>
+                <Link to={"/"} style={{ width: "100%" }}>
+                  <button
+                    style={{
+                      width: "100%",
+                      backgroundColor: "#5D37F3",
+                      color: "#FFFFFF",
+                      fontSize: "14px",
+                      fontWeight: "500",
+                      lineHeight: "20px",
+                      padding: "10px 20px 10px 20px",
+                      borderRadius: "8px",
+                    }}
+                    onClick={closeModal}
+                  >
+                    კარგი
+                  </button>
+                </Link>
               </div>
             ) : (
               <div

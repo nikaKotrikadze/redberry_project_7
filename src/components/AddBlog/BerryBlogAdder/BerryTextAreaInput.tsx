@@ -1,10 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 
 const BerryTextAreaInput = ({ form, handleFormChange }: any) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const hoverStyles = {
+    background: "#F9F9FA",
+  };
+
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-      <label className="blog-adder-inputs-label">აღწერა *</label>
+      <label
+        style={{
+          color: "#1A1A1F",
+          fontSize: "14px",
+          fontWeight: 500,
+          lineHeight: "20px",
+        }}
+      >
+        აღწერა *
+      </label>
       <textarea
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         name="description"
         value={form.description}
         onChange={handleFormChange}
@@ -25,6 +41,7 @@ const BerryTextAreaInput = ({ form, handleFormChange }: any) => {
               : form.description.length === 0
               ? "#FCFCFD"
               : "#FAF2F3",
+          ...(isHovered ? hoverStyles : {}),
         }}
       ></textarea>
       <h3

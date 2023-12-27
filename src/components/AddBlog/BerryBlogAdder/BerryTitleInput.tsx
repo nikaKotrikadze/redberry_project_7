@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
 const BerryTitleInput = ({ form, handleFormChange }: any) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const hoverStyles = {
+    background: "#F9F9FA",
+  };
+
   return (
     <div
       style={{
@@ -10,8 +15,19 @@ const BerryTitleInput = ({ form, handleFormChange }: any) => {
         width: "280px",
       }}
     >
-      <label className="blog-adder-inputs-label">სათაური *</label>
+      <label
+        style={{
+          color: "#1A1A1F",
+          fontSize: "14px",
+          fontWeight: 500,
+          lineHeight: "20px",
+        }}
+      >
+        სათაური *
+      </label>
       <input
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         name="title"
         value={form.title}
         onChange={handleFormChange}
@@ -32,6 +48,7 @@ const BerryTitleInput = ({ form, handleFormChange }: any) => {
               : form.title.length === 0
               ? "#FCFCFD"
               : "#FAF2F3",
+          ...(isHovered ? hoverStyles : {}),
         }}
       />
       <div>

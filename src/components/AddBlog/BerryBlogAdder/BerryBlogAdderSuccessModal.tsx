@@ -1,5 +1,4 @@
 import React from "react";
-import "./berryblogaddersuccessmodal.css";
 import { useBlogAddedSuccessfullyModalStore } from "./blogadder.store";
 import { ReactSVG } from "react-svg";
 import tickCircle from "../../../images/tick-circle.svg";

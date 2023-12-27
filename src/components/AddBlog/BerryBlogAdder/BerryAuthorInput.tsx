@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
+import "./berryblogadderinputs.css";
 
 const BerryAuthorInput = ({
   form,
   handleFormChange,
   isGeorgianSymbol,
 }: any) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const hoverStyles = {
+    background: "#F9F9FA",
+  };
+
   return (
     <div
       style={{
@@ -14,8 +21,19 @@ const BerryAuthorInput = ({
         width: "280px",
       }}
     >
-      <label className="blog-adder-inputs-label">ავტორი *</label>
+      <label
+        style={{
+          color: "#1A1A1F",
+          fontSize: "14px",
+          fontWeight: 500,
+          lineHeight: "20px",
+        }}
+      >
+        ავტორი *
+      </label>
       <input
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         name="author"
         value={form.author}
         onChange={handleFormChange}
@@ -42,6 +60,7 @@ const BerryAuthorInput = ({
               : form.author.length === 0
               ? "#FCFCFD"
               : "#FAF2F3",
+          ...(isHovered ? hoverStyles : {}),
         }}
       />
       <div>
