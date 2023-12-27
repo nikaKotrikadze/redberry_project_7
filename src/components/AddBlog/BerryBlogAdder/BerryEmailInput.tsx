@@ -5,7 +5,7 @@ import emailErrorIcon from "../../../images/emailErrorIcon.svg";
 const BerryEmailInput = ({ form, handleFormChange }: any) => {
   const [isHovered, setIsHovered] = useState(false);
   const hoverStyles = {
-    backgroundColor: "#F9F9FA",
+    background: "#F9F9FA",
   };
 
   return (

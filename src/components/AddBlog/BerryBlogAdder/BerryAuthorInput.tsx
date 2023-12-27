@@ -7,10 +7,9 @@ const BerryAuthorInput = ({
   isGeorgianSymbol,
 }: any) => {
   const [isHovered, setIsHovered] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
 
   const hoverStyles = {
-    backgroundColor: "#F9F9FA",
+    background: "#F9F9FA",
   };
 
   return (
@@ -35,7 +34,6 @@ const BerryAuthorInput = ({
       <input
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        onFocus={() => setIsFocused(true)}
         name="author"
         value={form.author}
         onChange={handleFormChange}

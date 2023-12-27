@@ -39,6 +39,7 @@ const BerryBlogMultiSelector = ({ form, setForm, options }: any) => {
 
   const customStyles = {
     searchBox: {
+      zIndex: 0,
       display: "flex",
       textDecoration: "none",
       alignItems: "center",

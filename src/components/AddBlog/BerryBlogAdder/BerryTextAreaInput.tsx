@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const BerryTextAreaInput = ({ form, handleFormChange }: any) => {
   const [isHovered, setIsHovered] = useState(false);
   const hoverStyles = {
-    backgroundColor: "#F9F9FA",
+    background: "#F9F9FA",
   };
 
   return (
