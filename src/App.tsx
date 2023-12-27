@@ -6,7 +6,7 @@ import BerryAddBlog from "./components/AddBlog/BerryAddBlog";
 import { useSuccessfulLoginRequestStore } from "./components/Login/login.store";
 
 function App() {
-  const { isSuccessful }: any = useSuccessfulLoginRequestStore();
+  const { isSuccessful } = useSuccessfulLoginRequestStore();
   return (
     <Routes>
       <Route path="/" element={<Layout />} />

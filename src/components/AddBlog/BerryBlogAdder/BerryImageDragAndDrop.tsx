@@ -27,7 +27,7 @@ const BerryImageDragAndDrop = () => {
     setUploadedFile(null, null);
   };
 
-  const toBase64 = (file: any) => {
+  const toBase64 = (file: File) => {
     if (!file.type.startsWith("image/")) {
       console.error("Invalid file type. Please upload an image.");
       return;
