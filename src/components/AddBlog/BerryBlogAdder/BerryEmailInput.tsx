@@ -59,6 +59,7 @@ const BerryEmailInput = ({ form, handleFormChange }: any) => {
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         name="email"
+        type="email"
         value={form.email}
         onChange={handleFormChange}
         placeholder="Example@redberry.ge"

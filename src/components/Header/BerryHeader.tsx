@@ -15,10 +15,16 @@ const BerryHeader = () => {
   const handleLoginClick = () => {
     openModal();
   };
+  const handleLogoClick = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <header className="header-container">
-      <Link to={"/"}>
+      <Link to={"/"} onClick={handleLogoClick}>
         <ReactSVG src={REDBERRYLogo} />
       </Link>
       <BerryLoginModal />
