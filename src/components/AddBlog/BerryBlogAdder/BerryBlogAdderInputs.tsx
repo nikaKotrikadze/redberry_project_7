@@ -21,7 +21,7 @@ const BerryBlogAdderInputs = () => {
   const { setCategories }: any = useCategoryStore();
   const { base64String, setUploadedFile }: any = useFileStore();
   const [options, setOptions] = useState([]);
-  const { openModal }: any = useBlogAddedSuccessfullyModalStore();
+  const { openModal } = useBlogAddedSuccessfullyModalStore();
 
   const [form, setForm] = useState(() => {
     const storedForm = JSON.parse(localStorage.getItem("blogForm") || "{}");

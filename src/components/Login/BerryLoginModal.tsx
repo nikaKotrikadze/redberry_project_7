@@ -12,8 +12,8 @@ import loginErrorIcon from "../../images/loginErrorIcon.svg";
 import { Link } from "react-router-dom";
 
 const BerryLoginModal = () => {
-  const { isOpen, closeModal }: any = useLoginModalStore();
-  const { setIsSuccessful }: any = useSuccessfulLoginRequestStore();
+  const { isOpen, closeModal } = useLoginModalStore();
+  const { setIsSuccessful } = useSuccessfulLoginRequestStore();
   const [email, setEmail] = useState("");
   const [isLoginError, setIsLoginError] = useState(false);
   const [isLoginSuccess, setIsLoginSuccess] = useState(false);

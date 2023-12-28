@@ -2,6 +2,12 @@ import React, { useState } from "react";
 
 const BerryDateInput = ({ form, handleFormChange }: any) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+
+  const focusedStyles = {
+    border: "1.5px solid #5D37F3",
+    background: "#F7F7FF",
+  };
   const hoverStyles = {
     background: "#F9F9FA",
   };
@@ -28,6 +34,8 @@ const BerryDateInput = ({ form, handleFormChange }: any) => {
       <input
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
         name="date"
         value={form.date}
         onChange={handleFormChange}
@@ -46,12 +54,14 @@ const BerryDateInput = ({ form, handleFormChange }: any) => {
           border: `1px solid ${
             form.date ? "#14D81C" : form.date === "" ? "#E4E3EB" : "#EA1919"
           }`,
+          ...(isFocused && form.date === "" ? focusedStyles : {}),
           borderRadius: "12px",
           background: form.date
             ? "#F8FFF8"
             : form.date.length === 0
             ? "#FCFCFD"
             : "#FAF2F3",
+          outline: "none",
           ...(isHovered ? hoverStyles : {}),
         }}
       />

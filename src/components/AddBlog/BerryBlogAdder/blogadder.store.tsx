@@ -6,11 +6,18 @@ interface FileStore {
   setUploadedFile: (file: File | null, base64String: string | null) => void;
 }
 
-export const useBlogAddedSuccessfullyModalStore = create((set) => ({
-  isOpen: false,
-  openModal: () => set({ isOpen: true }),
-  closeModal: () => set({ isOpen: false }),
-}));
+interface BlogAddedSuccessfullyModalStoreInterface {
+  isOpen: boolean;
+  openModal: () => void;
+  closeModal: () => void;
+}
+
+export const useBlogAddedSuccessfullyModalStore =
+  create<BlogAddedSuccessfullyModalStoreInterface>((set) => ({
+    isOpen: false,
+    openModal: () => set({ isOpen: true }),
+    closeModal: () => set({ isOpen: false }),
+  }));
 
 export const useFileStore = create<FileStore>((set) => {
   const savedUploadedFileName = localStorage.getItem("uploadedFileName");
