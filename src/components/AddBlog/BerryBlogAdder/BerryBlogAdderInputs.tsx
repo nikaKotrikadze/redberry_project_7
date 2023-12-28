@@ -143,6 +143,7 @@ const BerryBlogAdderInputs = () => {
     const georgianRegex = /^[\u10A0-\u10FF]+$/;
     const isOnlyGeorgianLetters = georgianRegex.test(input.replace(/\s/g, ""));
     const containsSymbolsOrNumbers =
+      // eslint-disable-next-line no-useless-escape
       /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?0-9]/.test(input);
     return isOnlyGeorgianLetters && !containsSymbolsOrNumbers;
   };
