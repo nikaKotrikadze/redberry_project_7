@@ -1,8 +1,21 @@
+.blog-navigation {
+  display: flex;
+  justify-content: center;
+}
 .blog-navigation-container {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 24px;
+}
+
+.blog-navigation-container-items-over-sixteen {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 24px;
+  width: 1500px;
+  overflow-x: auto;
 }
 
 @media (max-width: 1600px) {

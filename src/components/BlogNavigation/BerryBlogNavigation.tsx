@@ -17,7 +17,13 @@ const BerryBlogNavigation = () => {
 
   return (
     <div className="blog-navigation">
-      <div className="blog-navigation-container">
+      <div
+        className={
+          categories.length >= 16
+            ? "blog-navigation-container-items-over-sixteen"
+            : "blog-navigation-container"
+        }
+      >
         {categories.map((item: CategoryInterface) => {
           return (
             <button
